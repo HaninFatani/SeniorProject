@@ -9,11 +9,13 @@ public class Algorithm {
     public int numInstructors= 5;
     public double Satisfactionfactor= .5;
     double[][] weightMatrix = new double[numSections][numInstructors];
-    double[][] ScoreMatrix = new double[numSections][numInstructors];
     double[][] assignMatrix = new double[numSections][numInstructors];
-    //Hello
+    
     public static void main(String[] args) throws FileNotFoundException {
-        
+        /**
+         * retrive the date from file instead of database
+         * The data will be stored temporary in linked-list
+         */
         File inputFile = new File("input.in");
         Scanner input = new Scanner(inputFile);
         
@@ -34,11 +36,13 @@ public class Algorithm {
         int numSection = 0;
         CoursesLL course = new CoursesLL();
         //get instructor/courses info
-        String who = input.next();
+        //=====================================================================
+        String IorC = input.next();
         
-        while(!who.equals("done")){
+        //store data in the linked list Instructors/Courses 
+        while(!IorC.equals("done")){
             
-            if(who.substring(0, 1).equals("I")){
+            if(IorC .substring(0, 1).equals("I")){
                 workload = input.nextDouble();
                 effort = input.nextDouble();
                 maxWorkload = input.nextInt();
@@ -47,25 +51,25 @@ public class Algorithm {
                 experience = input.nextInt();
                 System.out.println(workload+" "+effort+" "+maxWorkload+" "+majorI+" "+request+" "+experience);
                 
-                instructor.insert(who, workload, effort, maxWorkload, majorI, request);
+                instructor.insert(IorC, workload, effort, maxWorkload, majorI, request, experience);
                 
-            }else if(who.substring(0, 1).equals("C")){
+            }else if(IorC.substring(0, 1).equals("C")){
                  majorC = input.next();
                  creditHour = input.nextInt();
                  isProject = input.nextBoolean();
                  numStudent = input.nextInt();
                  numSection = input.nextInt();
                  System.out.println(majorC+" "+creditHour+" "+isProject+" "+numStudent+" "+numSection);
-                 course.insert(who, majorC, creditHour, isProject, numStudent, numSection);
+                 course.insert(IorC, majorC, creditHour, isProject, numStudent, numSection);
             }
             
-            who = input.next();
+            IorC = input.next();
             
         }
-        
+        /**
         instructor.display("I1");
         course.display("C1");
-        
+        */
         DistrbutAlgo(instructor, course);
     }
     
@@ -97,37 +101,51 @@ public class Algorithm {
     }
     
     private static int FindHighPriorityInstructorID(InstructorLL instructor, sectionInfo section, CoursesLL course) {
-        String listInstructors[][] = instructor.returnRequest(course.returnCourseID("C1"));
-        for(int i = 0 ; i < listInstructors.length ; i++){
-           
-                if(!listInstructors[i][0].equals(null)){
-                    
-                    String getID = listInstructors[i][0];
-                    double Workload = Double.parseDouble(listInstructors[i][1]);
-                    double Effort = Double.parseDouble(listInstructors[i][2]);
-                    double MaxWorkload = Integer.parseInt(listInstructors[i][3]);
-                    String MajorI = listInstructors[i][4];
-                    
-                    
-                    if(Workload >= MaxWorkload) 
-                        continue;
+        double[][] ScoreMatrix;
+        String listCourses[][] = course.returnCourseAttribute();
+        String listInstructors[][] = instructor.returnAllInstructor();
+        int i = 0;
+        int j = 0;
+        
+        while(listCourses[i][0] != null){
+                
+            String CourseID = listCourses[i][0];
+            String MajorC = listCourses[i][1];
+            boolean IsProject = Boolean.parseBoolean(listCourses[i][2]); 
+            int NumSection = Integer.parseInt(listCourses[i][3]);
+                
+            while(!listInstructors[j][0].equals(null)){
+                
+                ScoreMatrix = new double[NumSection][instructor.returnCounter()];
+                
+                String getInstID = listInstructors[j][0];
+                double Workload = Double.parseDouble(listInstructors[j][1]);
+                double Effort = Double.parseDouble(listInstructors[j][2]);
+                double MaxWorkload = Integer.parseInt(listInstructors[j][3]);
+                String MajorI = listInstructors[j][4];
+                
+                //compare request and course
+                if(instructor.returnRequest(CourseID)){
+                    ScoreMatrix[j][i] += 10;
+                //compare major, true weight
+                    if(MajorI.equals(MajorC)){
+                        ScoreMatrix[j][i] += 30;
+                    }
                     else{
-                        if(MajorI == course.returnCourseID(getID)) {
-                            Effort += 1;
-                            Workload += Effort;
-                        }
-                        else {Effort -= 1;}
                         
-                        listInstructors[i][1] = ""+Workload;
-                        listInstructors[i][2] = ""+Effort;
-                          
+                    
                     }
                     
-                    
                 }
-        
+                else continue;
+                    
+               
+
+                j++;
+                
+            }
+            i++;
         }
-        
         return 1; 
     }
 
