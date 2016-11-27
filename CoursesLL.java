@@ -135,20 +135,28 @@ public class CoursesLL {
         return null;  //If data is not found after traversing the entire link list
     }
     
-    public String returnMajor(String data){
-        return returnMajor(this.head, data);
+    public String[][] returnCourseAttribute(){
+        return returnCourseAttribute(this.head);
     }
     
-    private String returnMajor(CoursesInfo p, String data){
-               
+    private String[][] returnCourseAttribute(CoursesInfo p){
+       
+        String listInstructor[][] = new String[10][4];
+        int i = 0;
         while (p!= null) {
-            if (p.getCourseID().equals(data)) {  //If data is found
-                return p.getMajor();
-            }
+          
+                
+                listInstructor[i][0] = p.getCourseID();
+                listInstructor[i][1] = p.getMajor();
+                listInstructor[i][2] = ""+p.isIsProject();
+                listInstructor[i][3] = ""+p.getNumSection();
+                i++;
+                
             p = p.getNext();  //Goes to next node in the list
         }
-        return null;  //If data is not found after traversing the entire link list
+        return listInstructor;  //If data is not found after traversing the entire link list
     }
+   
 
 
 }
