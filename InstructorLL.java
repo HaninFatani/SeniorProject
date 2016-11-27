@@ -67,18 +67,18 @@ public class InstructorLL {
     
     //======================================================================
     // Displaying a specific node
-     public boolean returnRequest(String data) { 
-        return returnRequest(head, data); 
+     public boolean returnRequest(String data,String request) { 
+        return returnRequest(head, data, request); 
                                                        
     }
 
-    private boolean returnRequest(instrutorInfo p, String data) { 
+    private boolean returnRequest(instrutorInfo p, String id, String request) { 
         
         instrutorInfo helpPtr = p;  
         
         while (helpPtr != null) {   
         
-            if (helpPtr.getID().equals(data)) {
+            if (helpPtr.getID().equals(id) || helpPtr.getRequest(request)) {
              
                 return true;        
             }
@@ -114,11 +114,11 @@ public class InstructorLL {
     public String[][] returnAllInstructor(){
         return returnAllInstructor(this.head);
     }
-    
+     int i;
     private String[][] returnAllInstructor(instrutorInfo p){
        
         String listInstructor[][] = new String[10][6];
-        int i = 0;
+        i = 0;
         while (p!= null) {
           
                 
@@ -128,7 +128,7 @@ public class InstructorLL {
                 listInstructor[i][3] = ""+p.getMaxWorkload();
                 listInstructor[i][4] = p.getMajorI();
                 listInstructor[i][5] = ""+p.getExperience();
-                listInstructor[i][6] = ""+p.getRequest(null);
+                
                 i++;
             
             p = p.getNext();  //Goes to next node in the list
@@ -136,5 +136,8 @@ public class InstructorLL {
         return listInstructor;  //If data is not found after traversing the entire link list
     }
    
+    public  int returnCounter() {
+        return i;
+    }
     
 }
