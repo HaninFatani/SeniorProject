@@ -141,21 +141,23 @@ public class CoursesLL {
     
     private String[][] returnCourseAttribute(CoursesInfo p){
        
-        String listInstructor[][] = new String[10][4];
+        String listCourses[][] = new String[10][4];
         int i = 0;
         while (p!= null) {
           
                 
-                listInstructor[i][0] = p.getCourseID();
-                listInstructor[i][1] = p.getMajor();
-                listInstructor[i][2] = ""+p.isIsProject();
-                listInstructor[i][3] = ""+p.getNumSection();
+                listCourses[i][0] = p.getCourseID();
+                listCourses[i][1] = p.getMajor();
+                listCourses[i][2] = ""+p.isIsProject();
+                listCourses[i][3] = ""+p.getNumSection();
                 i++;
                 
             p = p.getNext();  //Goes to next node in the list
         }
-        return listInstructor;  //If data is not found after traversing the entire link list
+        return listCourses;  //If data is not found after traversing the entire link list
     }
+    
+    
    
 
 
