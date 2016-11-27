@@ -14,10 +14,10 @@ public class instrutorInfo {
     instrutorInfo next;
     private String ID;
     private double workload , effort;
-    private int maxWorkload ;
+    private int maxWorkload, experience;
     private String majorI;
     private String request [];
- 
+    
     
     public instrutorInfo() {
         this.next = null;
@@ -25,7 +25,7 @@ public class instrutorInfo {
 
     }
 
-    public instrutorInfo(instrutorInfo next, String ID, double workload, double effort, int maxWorkload, String majorI, String request) {
+    public instrutorInfo(instrutorInfo next, String ID, double workload, double effort, int maxWorkload, String majorI, String request, int experience) {
         this.next = next;
         this.ID = ID;
         this.workload = workload;
@@ -40,7 +40,7 @@ public class instrutorInfo {
             }
         }
         
-        
+        this.experience = experience;
         
     }
 
@@ -110,6 +110,14 @@ public class instrutorInfo {
             }
         }
     }
-  
+
+    public int getExperience() {
+        return experience;
+    }
+
+    public void setExperience(int experience) {
+        this.experience = experience;
+    }
+    
     
 }
