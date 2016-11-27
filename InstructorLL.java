@@ -67,25 +67,24 @@ public class InstructorLL {
     
     //======================================================================
     // Displaying a specific node
-     public String display(String data) { 
-        return display(head, data); 
+     public boolean returnRequest(String data) { 
+        return returnRequest(head, data); 
                                                        
     }
 
-    private String display(instrutorInfo p, String data) { 
+    private boolean returnRequest(instrutorInfo p, String data) { 
         
         instrutorInfo helpPtr = p;  
         
         while (helpPtr != null) {   
         
             if (helpPtr.getID().equals(data)) {
-               
-              
-              
+             
+                return true;        
             }
             helpPtr = helpPtr.getNext(); 
         }
-        return null;
+        return false;
     }
     
       
@@ -129,6 +128,7 @@ public class InstructorLL {
                 listInstructor[i][3] = ""+p.getMaxWorkload();
                 listInstructor[i][4] = p.getMajorI();
                 listInstructor[i][5] = ""+p.getExperience();
+                listInstructor[i][6] = ""+p.getRequest(null);
                 i++;
             
             p = p.getNext();  //Goes to next node in the list
