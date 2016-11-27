@@ -102,6 +102,7 @@ public class Algorithm {
     
     private static int FindHighPriorityInstructorID(InstructorLL instructor, sectionInfo section, CoursesLL course) {
         double[][] ScoreMatrix;
+        double[][] assignMatrix;
         String listCourses[][] = course.returnCourseAttribute();
         String listInstructors[][] = instructor.returnAllInstructor();
         int i = 0;
@@ -113,37 +114,40 @@ public class Algorithm {
             String MajorC = listCourses[i][1];
             boolean IsProject = Boolean.parseBoolean(listCourses[i][2]); 
             int NumSection = Integer.parseInt(listCourses[i][3]);
-                
+            ScoreMatrix = new double[instructor.returnCounter()][NumSection];
+            assignMatrix = new double[instructor.returnCounter()][NumSection];
+            
+            
             while(!listInstructors[j][0].equals(null)){
                 
-                ScoreMatrix = new double[NumSection][instructor.returnCounter()];
+               
                 
-                String getInstID = listInstructors[j][0];
+                String InstID = listInstructors[j][0];
                 double Workload = Double.parseDouble(listInstructors[j][1]);
                 double Effort = Double.parseDouble(listInstructors[j][2]);
                 double MaxWorkload = Integer.parseInt(listInstructors[j][3]);
                 String MajorI = listInstructors[j][4];
+                int experienc = Integer.parseInt(listInstructors[j][5]);
                 
                 //compare request and course
-                if(instructor.returnRequest(CourseID)){
-                    ScoreMatrix[j][i] += 10;
+                if(instructor.returnRequest(InstID ,CourseID)){
+                    ScoreMatrix[i][j] += 10;
                 //compare major, true weight
                     if(MajorI.equals(MajorC)){
                         ScoreMatrix[j][i] += 30;
-                    }
-                    else{
-                        
-                    
-                    }
-                    
+                    }   
+                    if(experienc>0) ScoreMatrix[j][i] += 30;
                 }
-                else continue;
-                    
-               
-
                 j++;
-                
+ 
             }
+            int n = 0;
+            double max = ScoreMatrix[i][0];
+            for(n = 0 ; n <ScoreMatrix[i].length ; n++){
+                if(max < ScoreMatrix[i][n])
+                    max = ScoreMatrix[i][n];
+            }
+            assignMatrix[i][n] = max;
             i++;
         }
         return 1; 
