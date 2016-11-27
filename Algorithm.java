@@ -11,7 +11,7 @@ public class Algorithm {
     double[][] weightMatrix = new double[numSections][numInstructors];
     double[][] ScoreMatrix = new double[numSections][numInstructors];
     double[][] assignMatrix = new double[numSections][numInstructors];
-    
+    //Hello
     public static void main(String[] args) throws FileNotFoundException {
         
         File inputFile = new File("input.in");
@@ -124,7 +124,7 @@ public class Algorithm {
                     }
                     
                     
-            }
+                }
         
         }
         
