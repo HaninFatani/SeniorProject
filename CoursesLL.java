@@ -157,7 +157,6 @@ public class CoursesLL {
         return listCourses;  //If data is not found after traversing the entire link list
     }
     
-    
    
 
 
