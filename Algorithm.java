@@ -8,9 +8,10 @@ public class Algorithm {
     public int numSections = 5;
     public int numInstructors= 5;
     public double Satisfactionfactor= .5;
-    double[][] weightMatrix = new double[numSections][numInstructors];
-    double[][] assignMatrix = new double[numSections][numInstructors];
-    
+    public static double[][] ScoreMatrix;
+    public static double[][] assignMatrix;
+    public static CoursesLL course = new CoursesLL();
+    public static InstructorLL instructor = new InstructorLL();
     public static void main(String[] args) throws FileNotFoundException {
         /**
          * retrive the date from file instead of database
@@ -26,7 +27,7 @@ public class Algorithm {
         String majorI = null;
         String request = null;
         int experience = 0;
-        InstructorLL instructor = new InstructorLL();
+   
         
         //course's attributes
         String majorC = null;
@@ -34,7 +35,7 @@ public class Algorithm {
         boolean isProject = false;
         int numStudent = 0;
         int numSection = 0;
-        CoursesLL course = new CoursesLL();
+
         //get instructor/courses info
         //=====================================================================
         String IorC = input.next();
@@ -84,7 +85,7 @@ public class Algorithm {
             
             while (course.section.getInstructorAssigned()== null) 
             {
-                 FindHighPriorityInstructorID(instructor,course.section, course);
+                 FindHighPriorityInstructorID(instructor, course);
 
                 if (satisfactionLoad(InstructorID) > (totalAEPH(InstructorID)+ AEPH(course.section.getWeight(), InstructorID))) // && no constraints exception occurs 
                 {
@@ -100,9 +101,8 @@ public class Algorithm {
 
     }
     
-    private static int FindHighPriorityInstructorID(InstructorLL instructor, sectionInfo section, CoursesLL course) {
-        double[][] ScoreMatrix;
-        double[][] assignMatrix;
+    private static int FindHighPriorityInstructorID(InstructorLL instructor, CoursesLL course) {
+
         String listCourses[][] = course.returnCourseAttribute();
         String listInstructors[][] = instructor.returnAllInstructor();
         int i = 0;
